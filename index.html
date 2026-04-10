@@ -1,1 +1,509 @@
+<!DOCTYPE html>
 
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oleg Car Glass – Receipt Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --surface: #1a1a1a;
+    --border: #2e2e2e;
+    --accent: #e8ff47;
+    --accent2: #47c8ff;
+    --text: #f0f0f0;
+    --muted: #777;
+    --danger: #ff4747;
+  }
+
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+background: var(–bg);
+color: var(–text);
+font-family: ‘DM Mono’, monospace;
+min-height: 100vh;
+padding: 0;
+}
+
+header {
+background: var(–surface);
+border-bottom: 2px solid var(–accent);
+padding: 18px 32px;
+display: flex;
+align-items: center;
+gap: 16px;
+}
+
+header .logo {
+font-family: ‘Syne’, sans-serif;
+font-size: 1.5rem;
+font-weight: 800;
+color: var(–accent);
+letter-spacing: -1px;
+}
+
+header .sub {
+color: var(–muted);
+font-size: 0.8rem;
+}
+
+.container {
+max-width: 960px;
+margin: 0 auto;
+padding: 32px 20px;
+display: grid;
+grid-template-columns: 280px 1fr;
+gap: 24px;
+}
+
+/* SIDEBAR */
+.sidebar {
+display: flex;
+flex-direction: column;
+gap: 16px;
+}
+
+.sidebar h2 {
+font-family: ‘Syne’, sans-serif;
+font-size: 0.75rem;
+text-transform: uppercase;
+letter-spacing: 3px;
+color: var(–muted);
+padding-bottom: 8px;
+border-bottom: 1px solid var(–border);
+}
+
+.biz-list {
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+
+.biz-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 8px;
+padding: 12px 14px;
+cursor: pointer;
+transition: all 0.15s;
+position: relative;
+}
+
+.biz-card:hover {
+border-color: var(–accent);
+background: #222;
+}
+
+.biz-card.active {
+border-color: var(–accent);
+background: #1e2200;
+}
+
+.biz-card .biz-name {
+font-weight: 500;
+font-size: 0.85rem;
+color: var(–text);
+margin-bottom: 3px;
+}
+
+.biz-card .biz-email {
+font-size: 0.72rem;
+color: var(–accent2);
+word-break: break-all;
+}
+
+.biz-card .delete-biz {
+position: absolute;
+top: 8px;
+right: 10px;
+background: none;
+border: none;
+color: var(–muted);
+cursor: pointer;
+font-size: 0.8rem;
+line-height: 1;
+padding: 2px 5px;
+border-radius: 4px;
+transition: color 0.15s, background 0.15s;
+}
+
+.biz-card .delete-biz:hover {
+color: var(–danger);
+background: #2a1414;
+}
+
+/* ADD BUSINESS FORM */
+.add-biz-box {
+background: var(–surface);
+border: 1px dashed var(–border);
+border-radius: 8px;
+padding: 14px;
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+
+.add-biz-box h3 {
+font-size: 0.75rem;
+text-transform: uppercase;
+letter-spacing: 2px;
+color: var(–muted);
+margin-bottom: 4px;
+}
+
+.add-biz-box input {
+background: var(–bg);
+border: 1px solid var(–border);
+border-radius: 6px;
+color: var(–text);
+font-family: ‘DM Mono’, monospace;
+font-size: 0.8rem;
+padding: 8px 10px;
+outline: none;
+transition: border-color 0.15s;
+width: 100%;
+}
+
+.add-biz-box input:focus {
+border-color: var(–accent);
+}
+
+.add-biz-box input::placeholder { color: var(–muted); }
+
+.btn {
+background: var(–accent);
+color: #000;
+border: none;
+border-radius: 6px;
+font-family: ‘Syne’, sans-serif;
+font-size: 0.8rem;
+font-weight: 700;
+padding: 9px 14px;
+cursor: pointer;
+transition: opacity 0.15s;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+.btn:hover { opacity: 0.85; }
+
+.btn.secondary {
+background: var(–surface);
+color: var(–text);
+border: 1px solid var(–border);
+}
+
+.btn.secondary:hover { border-color: var(–accent); color: var(–accent); }
+
+/* RECEIPT AREA */
+.receipt-area {
+display: flex;
+flex-direction: column;
+gap: 16px;
+}
+
+.receipt-area h2 {
+font-family: ‘Syne’, sans-serif;
+font-size: 0.75rem;
+text-transform: uppercase;
+letter-spacing: 3px;
+color: var(–muted);
+padding-bottom: 8px;
+border-bottom: 1px solid var(–border);
+}
+
+.to-field {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 8px;
+padding: 14px 16px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.to-field label {
+font-size: 0.75rem;
+color: var(–muted);
+text-transform: uppercase;
+letter-spacing: 2px;
+white-space: nowrap;
+}
+
+.to-field input {
+flex: 1;
+background: none;
+border: none;
+color: var(–accent2);
+font-family: ‘DM Mono’, monospace;
+font-size: 0.9rem;
+outline: none;
+}
+
+.to-field input::placeholder { color: var(–muted); }
+
+.receipt-box {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 8px;
+overflow: hidden;
+flex: 1;
+}
+
+.receipt-box .receipt-header {
+background: #222;
+border-bottom: 1px solid var(–border);
+padding: 10px 16px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.receipt-box .receipt-header span {
+font-size: 0.72rem;
+text-transform: uppercase;
+letter-spacing: 2px;
+color: var(–muted);
+}
+
+.receipt-box textarea {
+background: transparent;
+border: none;
+color: var(–text);
+font-family: ‘DM Mono’, monospace;
+font-size: 0.88rem;
+line-height: 1.7;
+min-height: 320px;
+outline: none;
+padding: 20px;
+resize: vertical;
+width: 100%;
+}
+
+.receipt-box textarea::placeholder { color: #444; }
+
+.actions {
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+}
+
+.btn.copy {
+background: var(–accent2);
+}
+
+.btn.clear {
+background: none;
+border: 1px solid var(–danger);
+color: var(–danger);
+}
+
+.btn.clear:hover { background: #2a1414; }
+
+.toast {
+position: fixed;
+bottom: 24px;
+right: 24px;
+background: var(–accent);
+color: #000;
+font-family: ‘Syne’, sans-serif;
+font-weight: 700;
+font-size: 0.85rem;
+padding: 12px 20px;
+border-radius: 8px;
+opacity: 0;
+transform: translateY(10px);
+transition: all 0.3s;
+pointer-events: none;
+z-index: 999;
+}
+
+.toast.show {
+opacity: 1;
+transform: translateY(0);
+}
+
+@media (max-width: 680px) {
+.container { grid-template-columns: 1fr; }
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">⬡ Oleg Car Glass</div>
+    <div class="sub">Receipt & Email Tool</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- SIDEBAR -->
+
+  <div class="sidebar">
+    <h2>Businesses</h2>
+    <div class="biz-list" id="bizList"></div>
+
+
+<div class="add-biz-box">
+  <h3>+ Add Business</h3>
+  <input type="text" id="newBizName" placeholder="Business name" />
+  <input type="email" id="newBizEmail" placeholder="Email address" />
+  <button class="btn" onclick="addBusiness()">Add</button>
+</div>
+
+
+  </div>
+
+  <!-- RECEIPT -->
+
+  <div class="receipt-area">
+    <h2>Receipt</h2>
+
+
+<div class="to-field">
+  <label>To:</label>
+  <input type="text" id="toField" placeholder="Select a business or type manually" />
+</div>
+
+<div class="receipt-box">
+  <div class="receipt-header">
+    <span>Receipt / Note</span>
+    <span id="charCount">0 chars</span>
+  </div>
+  <textarea id="receiptBody" placeholder="Write the receipt details here...&#10;&#10;e.g.&#10;Date: &#10;Vehicle: &#10;Job: &#10;Amount: &#10;Notes: " oninput="updateCount()"></textarea>
+</div>
+
+<div class="actions">
+  <button class="btn copy" onclick="copyAll()">Copy All</button>
+  <button class="btn" onclick="copyEmail()">Copy Email Only</button>
+  <button class="btn secondary" onclick="printReceipt()">Print</button>
+  <button class="btn clear" onclick="clearAll()">Clear</button>
+</div>
+
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // Default businesses
+  const defaultBusinesses = [
+    { name: "Pro Motors", email: "Claims@pro-motors.co.il" }
+  ];
+
+  let businesses = [];
+
+  function loadBusinesses() {
+    const saved = localStorage.getItem('ocg_businesses');
+    if (saved) {
+      businesses = JSON.parse(saved);
+    } else {
+      businesses = [...defaultBusinesses];
+      saveBusinesses();
+    }
+    renderBusinesses();
+  }
+
+  function saveBusinesses() {
+    localStorage.setItem('ocg_businesses', JSON.stringify(businesses));
+  }
+
+  function renderBusinesses() {
+    const list = document.getElementById('bizList');
+    list.innerHTML = '';
+    businesses.forEach((biz, i) => {
+      const card = document.createElement('div');
+      card.className = 'biz-card';
+      card.innerHTML = `
+        <div class="biz-name">${biz.name}</div>
+        <div class="biz-email">${biz.email}</div>
+        <button class="delete-biz" onclick="deleteBiz(event, ${i})" title="Remove">✕</button>
+      `;
+      card.addEventListener('click', () => selectBusiness(biz, card));
+      list.appendChild(card);
+    });
+  }
+
+  function selectBusiness(biz, card) {
+    document.querySelectorAll('.biz-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    document.getElementById('toField').value = biz.email;
+  }
+
+  function addBusiness() {
+    const name = document.getElementById('newBizName').value.trim();
+    const email = document.getElementById('newBizEmail').value.trim();
+    if (!name || !email) { showToast('Fill in both fields!'); return; }
+    businesses.push({ name, email });
+    saveBusinesses();
+    renderBusinesses();
+    document.getElementById('newBizName').value = '';
+    document.getElementById('newBizEmail').value = '';
+    showToast('Business added!');
+  }
+
+  function deleteBiz(e, index) {
+    e.stopPropagation();
+    businesses.splice(index, 1);
+    saveBusinesses();
+    renderBusinesses();
+    showToast('Removed');
+  }
+
+  function updateCount() {
+    const len = document.getElementById('receiptBody').value.length;
+    document.getElementById('charCount').textContent = len + ' chars';
+  }
+
+  function copyAll() {
+    const to = document.getElementById('toField').value;
+    const body = document.getElementById('receiptBody').value;
+    const text = (to ? 'To: ' + to + '\n\n' : '') + body;
+    navigator.clipboard.writeText(text).then(() => showToast('Copied!'));
+  }
+
+  function copyEmail() {
+    const email = document.getElementById('toField').value;
+    if (!email) { showToast('No email selected'); return; }
+    navigator.clipboard.writeText(email).then(() => showToast('Email copied!'));
+  }
+
+  function clearAll() {
+    document.getElementById('toField').value = '';
+    document.getElementById('receiptBody').value = '';
+    document.querySelectorAll('.biz-card').forEach(c => c.classList.remove('active'));
+    updateCount();
+  }
+
+  function printReceipt() {
+    const to = document.getElementById('toField').value;
+    const body = document.getElementById('receiptBody').value;
+    const win = window.open('', '_blank');
+    win.document.write(<pre style="font-family:monospace;font-size:14px;padding:30px;">${to ? 'To: ' + to + '\n\n' : ''}${body}</pre>);
+
+
+win.document.close();
+win.print();
+
+
+}
+
+function showToast(msg) {
+const t = document.getElementById(‘toast’);
+t.textContent = msg;
+t.classList.add(‘show’);
+setTimeout(() => t.classList.remove(‘show’), 2000);
+}
+
+loadBusinesses();
+</script>
+
+</body>
+</html>
