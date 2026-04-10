@@ -2,507 +2,419 @@
 
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oleg Car Glass – Receipt Tool</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0f0f0f;
-    --surface: #1a1a1a;
-    --border: #2e2e2e;
-    --accent: #e8ff47;
-    --accent2: #47c8ff;
-    --text: #f0f0f0;
-    --muted: #777;
-    --danger: #ff4747;
-  }
-
-- { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-background: var(–bg);
-color: var(–text);
-font-family: ‘DM Mono’, monospace;
-min-height: 100vh;
-padding: 0;
-}
-
-header {
-background: var(–surface);
-border-bottom: 2px solid var(–accent);
-padding: 18px 32px;
-display: flex;
-align-items: center;
-gap: 16px;
-}
-
-header .logo {
-font-family: ‘Syne’, sans-serif;
-font-size: 1.5rem;
-font-weight: 800;
-color: var(–accent);
-letter-spacing: -1px;
-}
-
-header .sub {
-color: var(–muted);
-font-size: 0.8rem;
-}
-
-.container {
-max-width: 960px;
-margin: 0 auto;
-padding: 32px 20px;
-display: grid;
-grid-template-columns: 280px 1fr;
-gap: 24px;
-}
-
-/* SIDEBAR */
-.sidebar {
-display: flex;
-flex-direction: column;
-gap: 16px;
-}
-
-.sidebar h2 {
-font-family: ‘Syne’, sans-serif;
-font-size: 0.75rem;
-text-transform: uppercase;
-letter-spacing: 3px;
-color: var(–muted);
-padding-bottom: 8px;
-border-bottom: 1px solid var(–border);
-}
-
-.biz-list {
-display: flex;
-flex-direction: column;
-gap: 8px;
-}
-
-.biz-card {
-background: var(–surface);
-border: 1px solid var(–border);
-border-radius: 8px;
-padding: 12px 14px;
-cursor: pointer;
-transition: all 0.15s;
-position: relative;
-}
-
-.biz-card:hover {
-border-color: var(–accent);
-background: #222;
-}
-
-.biz-card.active {
-border-color: var(–accent);
-background: #1e2200;
-}
-
-.biz-card .biz-name {
-font-weight: 500;
-font-size: 0.85rem;
-color: var(–text);
-margin-bottom: 3px;
-}
-
-.biz-card .biz-email {
-font-size: 0.72rem;
-color: var(–accent2);
-word-break: break-all;
-}
-
-.biz-card .delete-biz {
-position: absolute;
-top: 8px;
-right: 10px;
-background: none;
-border: none;
-color: var(–muted);
-cursor: pointer;
-font-size: 0.8rem;
-line-height: 1;
-padding: 2px 5px;
-border-radius: 4px;
-transition: color 0.15s, background 0.15s;
-}
-
-.biz-card .delete-biz:hover {
-color: var(–danger);
-background: #2a1414;
-}
-
-/* ADD BUSINESS FORM */
-.add-biz-box {
-background: var(–surface);
-border: 1px dashed var(–border);
-border-radius: 8px;
-padding: 14px;
-display: flex;
-flex-direction: column;
-gap: 8px;
-}
-
-.add-biz-box h3 {
-font-size: 0.75rem;
-text-transform: uppercase;
-letter-spacing: 2px;
-color: var(–muted);
-margin-bottom: 4px;
-}
-
-.add-biz-box input {
-background: var(–bg);
-border: 1px solid var(–border);
-border-radius: 6px;
-color: var(–text);
-font-family: ‘DM Mono’, monospace;
-font-size: 0.8rem;
-padding: 8px 10px;
-outline: none;
-transition: border-color 0.15s;
-width: 100%;
-}
-
-.add-biz-box input:focus {
-border-color: var(–accent);
-}
-
-.add-biz-box input::placeholder { color: var(–muted); }
-
-.btn {
-background: var(–accent);
-color: #000;
-border: none;
-border-radius: 6px;
-font-family: ‘Syne’, sans-serif;
-font-size: 0.8rem;
-font-weight: 700;
-padding: 9px 14px;
-cursor: pointer;
-transition: opacity 0.15s;
-text-transform: uppercase;
-letter-spacing: 1px;
-}
-
-.btn:hover { opacity: 0.85; }
-
-.btn.secondary {
-background: var(–surface);
-color: var(–text);
-border: 1px solid var(–border);
-}
-
-.btn.secondary:hover { border-color: var(–accent); color: var(–accent); }
-
-/* RECEIPT AREA */
-.receipt-area {
-display: flex;
-flex-direction: column;
-gap: 16px;
-}
-
-.receipt-area h2 {
-font-family: ‘Syne’, sans-serif;
-font-size: 0.75rem;
-text-transform: uppercase;
-letter-spacing: 3px;
-color: var(–muted);
-padding-bottom: 8px;
-border-bottom: 1px solid var(–border);
-}
-
-.to-field {
-background: var(–surface);
-border: 1px solid var(–border);
-border-radius: 8px;
-padding: 14px 16px;
-display: flex;
-align-items: center;
-gap: 10px;
-}
-
-.to-field label {
-font-size: 0.75rem;
-color: var(–muted);
-text-transform: uppercase;
-letter-spacing: 2px;
-white-space: nowrap;
-}
-
-.to-field input {
-flex: 1;
-background: none;
-border: none;
-color: var(–accent2);
-font-family: ‘DM Mono’, monospace;
-font-size: 0.9rem;
-outline: none;
-}
-
-.to-field input::placeholder { color: var(–muted); }
-
-.receipt-box {
-background: var(–surface);
-border: 1px solid var(–border);
-border-radius: 8px;
-overflow: hidden;
-flex: 1;
-}
-
-.receipt-box .receipt-header {
-background: #222;
-border-bottom: 1px solid var(–border);
-padding: 10px 16px;
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
-
-.receipt-box .receipt-header span {
-font-size: 0.72rem;
-text-transform: uppercase;
-letter-spacing: 2px;
-color: var(–muted);
-}
-
-.receipt-box textarea {
-background: transparent;
-border: none;
-color: var(–text);
-font-family: ‘DM Mono’, monospace;
-font-size: 0.88rem;
-line-height: 1.7;
-min-height: 320px;
-outline: none;
-padding: 20px;
-resize: vertical;
-width: 100%;
-}
-
-.receipt-box textarea::placeholder { color: #444; }
-
-.actions {
-display: flex;
-gap: 10px;
-flex-wrap: wrap;
-}
-
-.btn.copy {
-background: var(–accent2);
-}
-
-.btn.clear {
-background: none;
-border: 1px solid var(–danger);
-color: var(–danger);
-}
-
-.btn.clear:hover { background: #2a1414; }
-
-.toast {
-position: fixed;
-bottom: 24px;
-right: 24px;
-background: var(–accent);
-color: #000;
-font-family: ‘Syne’, sans-serif;
-font-weight: 700;
-font-size: 0.85rem;
-padding: 12px 20px;
-border-radius: 8px;
-opacity: 0;
-transform: translateY(10px);
-transition: all 0.3s;
-pointer-events: none;
-z-index: 999;
-}
-
-.toast.show {
-opacity: 1;
-transform: translateY(0);
-}
-
-@media (max-width: 680px) {
-.container { grid-template-columns: 1fr; }
-}
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OlegCarGlass — CRM</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪟</text></svg>"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #0c0c0c; color: #f0ece0; font-family: 'Outfit', sans-serif; min-height: 100vh; }
+    .fade-in { animation: fadeUp 0.4s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    input, textarea, select {
+      width: 100%; padding: 11px 14px;
+      background: #161616; border: 1.5px solid #242424;
+      border-radius: 10px; color: #f0ece0; font-size: 14px;
+      font-family: 'Outfit', sans-serif; outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus, textarea:focus, select:focus { border-color: #c9962a; }
+    input::placeholder, textarea::placeholder { color: #383430; }
+    select option { background: #161616; }
+    textarea { resize: vertical; }
+    .biz-row { transition: all 0.16s ease; cursor: pointer; }
+    .biz-row:hover { background: #161410 !important; }
+    .biz-row.sel { background: #1c1810 !important; border-color: #c9962a55 !important; }
+    .primary-btn {
+      background: #c9962a; color: #0c0b09; border: none;
+      padding: 12px 24px; border-radius: 10px; font-weight: 600;
+      font-size: 14px; cursor: pointer; font-family: 'Outfit', sans-serif;
+      transition: all 0.17s; width: 100%;
+    }
+    .primary-btn:hover:not(:disabled) { background: #d9a83a; box-shadow: 0 4px 20px rgba(201,150,42,0.22); transform: translateY(-1px); }
+    .primary-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+    .ghost-btn {
+      background: transparent; color: #666; border: 1.5px solid #222;
+      padding: 10px 18px; border-radius: 10px; font-weight: 500;
+      font-size: 13px; cursor: pointer; font-family: 'Outfit', sans-serif;
+      transition: all 0.16s;
+    }
+    .ghost-btn:hover { color: #aaa; border-color: #363636; }
+    .dashed-btn {
+      background: transparent; color: #5a5248; border: 1.5px dashed #2a2520;
+      padding: 10px; border-radius: 10px; font-size: 13px;
+      cursor: pointer; font-family: 'Outfit', sans-serif; width: 100%;
+      transition: all 0.16s; margin-top: 8px;
+    }
+    .dashed-btn:hover { color: #c9962a; border-color: #c9962a55; background: #c9962a08; }
+    .tab-btn { background: none; border: none; cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 500; padding: 8px 0; color: #444; transition: color 0.15s; position: relative; }
+    .tab-btn.on { color: #f0ece0; }
+    .tab-btn.on::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: #c9962a; border-radius: 2px; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: #222; border-radius: 4px; }
+    .del-btn { background: none; border: none; color: #333; font-size: 14px; cursor: pointer; padding: 4px 6px; border-radius: 5px; transition: color 0.15s; line-height: 1; }
+    .del-btn:hover { color: #8f5a5a; }
+  </style>
 </head>
 <body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useCallback } = React;
 
-<header>
-  <div>
-    <div class="logo">⬡ Oleg Car Glass</div>
-    <div class="sub">Receipt & Email Tool</div>
+const DEFAULT_BUSINESSES = [
+{ id: 1, name: “SafeLite AutoGlass”, email: “orders@safelite.com”, phone: “800-638-8958” },
+{ id: 2, name: “Harmon AutoGlass”, email: “contact@harmonag.com”, phone: “800-726-8464” },
+{ id: 3, name: “Novus Glass”, email: “info@novusglass.com”, phone: “800-944-7732” },
+{ id: 4, name: “Glass Doctor”, email: “service@glassdoctor.com”, phone: “800-913-9230” },
+{ id: 5, name: “National Windshield”, email: “orders@nationalws.com”, phone: “888-200-4100” },
+];
+
+const Lbl = ({ c }) => (
+
+  <div style={{ fontSize: "11px", color: "#5a5248", letterSpacing: "0.7px", marginBottom: "6px", textTransform: "uppercase" }}>{c}</div>
+);
+
+function App() {
+const [businesses, setBusinesses] = useState(DEFAULT_BUSINESSES);
+const [sel, setSel] = useState(null);
+const [tab, setTab] = useState(“receipt”);
+const [addingBiz, setAddingBiz] = useState(false);
+const [newBiz, setNewBiz] = useState({ name: “”, email: “”, phone: “” });
+
+const [form, setForm] = useState({ service: “”, amount: “”, date: “”, notes: “”, msg: “” });
+const [loading, setLoading] = useState(false);
+const [preview, setPreview] = useState(null);
+const [toast, setToast] = useState(null);
+
+const [jobs, setJobs] = useState([]);
+const [jf, setJf] = useState({ service: “”, amount: “”, date: “”, type: “income”, status: “paid”, bizId: “” });
+
+const ping = (msg, ok = true) => {
+setToast({ msg, ok });
+setTimeout(() => setToast(null), 3200);
+};
+
+const generate = async () => {
+if (!sel) return ping(“Select a business first”, false);
+if (!form.service.trim() || !form.amount) return ping(“Service and amount are required”, false);
+setLoading(true);
+setPreview(null);
+try {
+const res = await fetch(“https://api.anthropic.com/v1/messages”, {
+method: “POST”,
+headers: { “Content-Type”: “application/json” },
+body: JSON.stringify({
+model: “claude-sonnet-4-20250514”,
+max_tokens: 900,
+messages: [{
+role: “user”,
+content: Write a short, warm and professional email receipt from OlegCarGlass auto glass shop.\nTo: ${sel.name} (${sel.email})\nService: ${form.service}\nAmount: $${form.amount}\nDate: ${form.date || "today"}\nNotes: ${form.notes || "none"}\nPersonal message: ${form.msg || "none"}\n\nFirst line must be exactly: Subject: [your subject here]\nThen blank line, then the email body.\nFriendly, concise, professional. Sign off as Oleg — OlegCarGlass.
+}]
+})
+});
+const data = await res.json();
+if (data.error) { ping(“API error: “ + data.error.message, false); setLoading(false); return; }
+const text = (data.content || []).map(b => b.text || “”).join(”\n”);
+setPreview(text);
+} catch (e) {
+ping(“Something went wrong. Check your connection.”, false);
+}
+setLoading(false);
+};
+
+const openMail = () => {
+if (!preview || !sel) return;
+const lines = preview.split(”\n”);
+const subLine = lines.find(l => /^subject:/i.test(l.trim())) || “”;
+const subject = subLine.replace(/^subject:\s*/i, “”).trim();
+const body = lines.filter(l => !/^subject:/i.test(l.trim())).join(”\n”).trim();
+window.open(mailto:${sel.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)});
+ping(Email client opened for ${sel.name} ✓);
+};
+
+const saveBiz = () => {
+if (!newBiz.name.trim()) return ping(“Business name is required”, false);
+setBusinesses(p => […p, { …newBiz, id: Date.now() }]);
+setNewBiz({ name: “”, email: “”, phone: “” });
+setAddingBiz(false);
+ping(${newBiz.name} added);
+};
+
+const deleteBiz = (id) => {
+if (sel?.id === id) setSel(null);
+setBusinesses(p => p.filter(b => b.id !== id));
+ping(“Business removed”);
+};
+
+const saveJob = () => {
+if (!jf.service.trim() || !jf.amount) return ping(“Service and amount are required”, false);
+setJobs(p => […p, { …jf, id: Date.now(), amount: parseFloat(jf.amount) }]);
+setJf({ service: “”, amount: “”, date: “”, type: “income”, status: “paid”, bizId: “” });
+ping(“Job saved”);
+};
+
+const deleteJob = (id) => { setJobs(p => p.filter(j => j.id !== id)); };
+
+const inc = jobs.filter(j => j.type === “income”).reduce((s, j) => s + j.amount, 0);
+const exp = jobs.filter(j => j.type === “expense”).reduce((s, j) => s + j.amount, 0);
+
+const today = new Date().toLocaleDateString(“en-US”, { month: “long”, day: “numeric”, year: “numeric” });
+
+return (
+<div style={{ minHeight: “100vh”, background: “#0c0c0c”, color: “#f0ece0”, fontFamily: “‘Outfit’, sans-serif” }}>
+
+
+  {/* Nav */}
+  <nav style={{
+    height: "60px", borderBottom: "1px solid #181818",
+    display: "flex", alignItems: "center", padding: "0 28px", gap: "24px",
+    background: "#0c0c0c", position: "sticky", top: 0, zIndex: 50
+  }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "10px", marginRight: "4px" }}>
+      <div style={{ width: "30px", height: "30px", background: "#c9962a", borderRadius: "7px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "15px" }}>🪟</div>
+      <div>
+        <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", lineHeight: 1.1 }}>OlegCarGlass</div>
+        <div style={{ fontSize: "9px", color: "#33302a", letterSpacing: "1.2px" }}>AUTO GLASS</div>
+      </div>
+    </div>
+    {[["receipt","Receipts"],["jobs","Jobs"],["finances","Finances"]].map(([k,l]) => (
+      <button key={k} className={`tab-btn ${tab===k?"on":""}`} onClick={() => setTab(k)}>{l}</button>
+    ))}
+    <div style={{ marginLeft: "auto", fontSize: "12px", color: "#2e2b26" }}>{today}</div>
+  </nav>
+
+  {/* Body */}
+  <div style={{ display: "flex", minHeight: "calc(100vh - 60px)" }}>
+
+    {/* MAIN */}
+    <div style={{ flex: 1, padding: "36px 40px 80px", minWidth: 0 }}>
+
+      {/* RECEIPTS */}
+      {tab === "receipt" && (
+        <div className="fade-in">
+          <div style={{ marginBottom: "28px" }}>
+            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "24px", fontWeight: 500 }}>
+              {sel ? `Receipt for ${sel.name}` : "Send a Receipt"}
+            </h1>
+            <p style={{ color: "#3d3830", fontSize: "13px", marginTop: "5px" }}>
+              {sel ? sel.email : "Click a business on the right to begin"}
+            </p>
+          </div>
+
+          {!sel ? (
+            <div style={{ border: "1.5px dashed #1e1e1e", borderRadius: "14px", padding: "72px 32px", textAlign: "center" }}>
+              <div style={{ fontSize: "30px", marginBottom: "10px", opacity: 0.25 }}>👉</div>
+              <div style={{ fontSize: "14px", color: "#2a2824" }}>Select a business from the sidebar to get started</div>
+            </div>
+          ) : (
+            <div style={{ maxWidth: "520px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+                <div style={{ marginBottom: "16px" }}>
+                  <Lbl c="Service / Work Done" />
+                  <input value={form.service} onChange={e => setForm(p => ({...p, service: e.target.value}))} placeholder="e.g. Windshield replacement" />
+                </div>
+                <div style={{ marginBottom: "16px" }}>
+                  <Lbl c="Amount ($)" />
+                  <input type="number" value={form.amount} onChange={e => setForm(p => ({...p, amount: e.target.value}))} placeholder="0.00" />
+                </div>
+              </div>
+              <div style={{ marginBottom: "16px" }}>
+                <Lbl c="Date" />
+                <input type="date" value={form.date} onChange={e => setForm(p => ({...p, date: e.target.value}))} />
+              </div>
+              <div style={{ marginBottom: "16px" }}>
+                <Lbl c="Job Notes (optional)" />
+                <textarea rows={2} value={form.notes} onChange={e => setForm(p => ({...p, notes: e.target.value}))} placeholder="Part numbers, vehicle info, anything relevant…" />
+              </div>
+              <div style={{ marginBottom: "22px" }}>
+                <Lbl c="Personal Message (optional)" />
+                <textarea rows={2} value={form.msg} onChange={e => setForm(p => ({...p, msg: e.target.value}))} placeholder="e.g. Thanks for the referral, really appreciate it!" />
+              </div>
+              <button className="primary-btn" onClick={generate} disabled={loading}>
+                {loading ? "Writing your receipt…" : "✦  Generate Receipt with AI"}
+              </button>
+
+              {preview && (
+                <div className="fade-in" style={{ marginTop: "22px", background: "#111", border: "1px solid #1e1e1e", borderRadius: "14px", padding: "20px 22px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+                    <span style={{ fontSize: "11px", color: "#4a4540", letterSpacing: "0.6px" }}>PREVIEW</span>
+                    <div style={{ display: "flex", gap: "8px" }}>
+                      <button className="ghost-btn" style={{ padding: "7px 14px", fontSize: "12px" }} onClick={() => setPreview(null)}>Discard</button>
+                      <button className="primary-btn" style={{ width: "auto", padding: "8px 20px", fontSize: "13px" }} onClick={openMail}>Open in Mail →</button>
+                    </div>
+                  </div>
+                  <pre style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", color: "#9a9080", lineHeight: 1.75, whiteSpace: "pre-wrap" }}>{preview}</pre>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* JOBS */}
+      {tab === "jobs" && (
+        <div className="fade-in">
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "24px", fontWeight: 500, marginBottom: "26px" }}>Jobs</h1>
+          <div style={{ maxWidth: "520px", background: "#111", border: "1px solid #1a1a1a", borderRadius: "14px", padding: "22px", marginBottom: "20px" }}>
+            <div style={{ fontSize: "12px", color: "#3d3830", marginBottom: "16px" }}>Log a new job or expense</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+              <div style={{ marginBottom: "14px", gridColumn: "span 2" }}>
+                <Lbl c="Service" />
+                <input value={jf.service} onChange={e => setJf(p => ({...p, service: e.target.value}))} placeholder="e.g. Windshield repair" />
+              </div>
+              <div style={{ marginBottom: "14px" }}>
+                <Lbl c="Amount ($)" />
+                <input type="number" value={jf.amount} onChange={e => setJf(p => ({...p, amount: e.target.value}))} placeholder="0.00" />
+              </div>
+              <div style={{ marginBottom: "14px" }}>
+                <Lbl c="Date" />
+                <input type="date" value={jf.date} onChange={e => setJf(p => ({...p, date: e.target.value}))} />
+              </div>
+              <div style={{ marginBottom: "14px" }}>
+                <Lbl c="Type" />
+                <select value={jf.type} onChange={e => setJf(p => ({...p, type: e.target.value}))}>
+                  <option value="income">Income</option>
+                  <option value="expense">Expense</option>
+                </select>
+              </div>
+              <div style={{ marginBottom: "14px" }}>
+                <Lbl c="Status" />
+                <select value={jf.status} onChange={e => setJf(p => ({...p, status: e.target.value}))}>
+                  <option value="paid">Paid</option>
+                  <option value="pending">Pending</option>
+                </select>
+              </div>
+              <div style={{ marginBottom: "18px", gridColumn: "span 2" }}>
+                <Lbl c="Business" />
+                <select value={jf.bizId} onChange={e => setJf(p => ({...p, bizId: e.target.value}))}>
+                  <option value="">— none —</option>
+                  {businesses.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
+                </select>
+              </div>
+            </div>
+            <button className="primary-btn" onClick={saveJob}>Save Job</button>
+          </div>
+
+          {jobs.length === 0
+            ? <div style={{ color: "#2a2824", fontSize: "14px", paddingTop: "16px" }}>No jobs logged yet.</div>
+            : <div style={{ maxWidth: "520px", display: "flex", flexDirection: "column", gap: "7px" }}>
+                {jobs.slice().reverse().map(j => {
+                  const b = businesses.find(x => x.id === parseInt(j.bizId));
+                  return (
+                    <div key={j.id} style={{ display: "flex", alignItems: "center", gap: "12px", padding: "13px 16px", background: "#0f0f0f", borderLeft: `3px solid ${j.type==="income"?"#6a8f5a":"#8f5a5a"}`, borderRadius: "9px" }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: "13px", fontWeight: 500 }}>{j.service}</div>
+                        <div style={{ fontSize: "11px", color: "#3d3830", marginTop: "2px" }}>{b?.name || "—"}{j.date && ` · ${j.date}`}</div>
+                      </div>
+                      <span style={{ fontSize: "10px", padding: "3px 9px", borderRadius: "20px", background: j.status==="paid"?"#6a8f5a18":"#c9962a18", color: j.status==="paid"?"#6a8f5a":"#c9962a" }}>{j.status}</span>
+                      <div style={{ fontFamily:"'Playfair Display',serif", fontSize: "15px", color: j.type==="income"?"#6a8f5a":"#8f5a5a" }}>{j.type==="expense"?"−":"+"}${j.amount.toFixed(2)}</div>
+                      <button className="del-btn" onClick={() => deleteJob(j.id)} title="Delete">✕</button>
+                    </div>
+                  );
+                })}
+              </div>
+          }
+        </div>
+      )}
+
+      {/* FINANCES */}
+      {tab === "finances" && (
+        <div className="fade-in">
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "24px", fontWeight: 500, marginBottom: "26px" }}>Finances</h1>
+          {jobs.length === 0
+            ? <div style={{ color: "#2a2824", fontSize: "14px", textAlign: "center", paddingTop: "60px" }}>
+                <div style={{ fontSize: "34px", marginBottom: "12px", opacity: 0.2 }}>📊</div>
+                Log jobs first — your financial summary will appear here.
+              </div>
+            : <div style={{ maxWidth: "520px" }}>
+                <div style={{ display: "flex", gap: "12px", marginBottom: "28px" }}>
+                  {[["Income", inc, "#6a8f5a"],["Expenses", exp, "#8f5a5a"],["Profit", inc-exp, inc-exp>=0?"#c9962a":"#8f5a5a"]].map(([l,v,c]) => (
+                    <div key={l} style={{ flex: 1, background: "#111", border: "1px solid #1a1a1a", borderRadius: "12px", padding: "16px 18px" }}>
+                      <div style={{ fontSize: "10px", color: "#3d3830", letterSpacing: "0.8px", marginBottom: "8px" }}>{l.toUpperCase()}</div>
+                      <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "20px", color: c }}>${Math.abs(v).toFixed(2)}</div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                  {jobs.slice().reverse().map(j => (
+                    <div key={j.id} style={{ display: "flex", alignItems: "center", gap: "12px", padding: "11px 14px", background: "#0f0f0f", borderRadius: "8px" }}>
+                      <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: j.type==="income"?"#6a8f5a":"#8f5a5a", flexShrink: 0 }} />
+                      <div style={{ flex: 1, fontSize: "13px" }}>{j.service}</div>
+                      <div style={{ fontSize: "12px", color: "#3d3830" }}>{j.date}</div>
+                      <div style={{ fontSize: "13px", fontWeight: 600, color: j.type==="income"?"#6a8f5a":"#8f5a5a" }}>{j.type==="expense"?"−":"+"}${j.amount.toFixed(2)}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+          }
+        </div>
+      )}
+    </div>
+
+    {/* SIDEBAR */}
+    <div style={{
+      width: "268px", borderLeft: "1px solid #161616",
+      background: "#090909", padding: "28px 16px",
+      height: "calc(100vh - 60px)", position: "sticky",
+      top: "60px", overflowY: "auto", flexShrink: 0
+    }}>
+      <div style={{ fontSize: "10px", color: "#2e2b26", letterSpacing: "1.2px", marginBottom: "14px", paddingLeft: "2px" }}>YOUR BUSINESSES</div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+        {businesses.map(b => (
+          <div key={b.id} className={`biz-row ${sel?.id===b.id?"sel":""}`}
+            onClick={() => { setSel(b); setPreview(null); setTab("receipt"); }}
+            style={{ padding: "11px 13px", borderRadius: "10px", border: `1.5px solid ${sel?.id===b.id?"#c9962a44":"#141414"}`, position: "relative" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+              <div style={{ width: "28px", height: "28px", borderRadius: "6px", background: sel?.id===b.id?"#1e1c14":"#141414", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", flexShrink: 0 }}>🏢</div>
+              <div style={{ overflow: "hidden", flex: 1 }}>
+                <div style={{ fontSize: "13px", fontWeight: 500, color: sel?.id===b.id?"#f0ece0":"#8a8070", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{b.name}</div>
+                <div style={{ fontSize: "11px", color: "#2e2c28", marginTop: "1px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{b.email}</div>
+              </div>
+              <button className="del-btn" onClick={e => { e.stopPropagation(); deleteBiz(b.id); }} title="Remove" style={{ flexShrink: 0 }}>✕</button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {addingBiz ? (
+        <div style={{ marginTop: "14px", background: "#111", border: "1px solid #1e1e1e", borderRadius: "12px", padding: "14px" }}>
+          <input value={newBiz.name} onChange={e => setNewBiz(p => ({...p, name: e.target.value}))} placeholder="Business name" style={{ marginBottom: "8px" }} />
+          <input value={newBiz.email} onChange={e => setNewBiz(p => ({...p, email: e.target.value}))} placeholder="Email" style={{ marginBottom: "8px" }} />
+          <input value={newBiz.phone} onChange={e => setNewBiz(p => ({...p, phone: e.target.value}))} placeholder="Phone (optional)" style={{ marginBottom: "12px" }} />
+          <div style={{ display: "flex", gap: "7px" }}>
+            <button className="primary-btn" style={{ padding: "9px" }} onClick={saveBiz}>Save</button>
+            <button className="ghost-btn" style={{ flex: 1 }} onClick={() => setAddingBiz(false)}>Cancel</button>
+          </div>
+        </div>
+      ) : (
+        <button className="dashed-btn" onClick={() => setAddingBiz(true)}>+ Add business</button>
+      )}
+    </div>
   </div>
-</header>
 
-<div class="container">
-
-  <!-- SIDEBAR -->
-
-  <div class="sidebar">
-    <h2>Businesses</h2>
-    <div class="biz-list" id="bizList"></div>
-
-
-<div class="add-biz-box">
-  <h3>+ Add Business</h3>
-  <input type="text" id="newBizName" placeholder="Business name" />
-  <input type="email" id="newBizEmail" placeholder="Email address" />
-  <button class="btn" onclick="addBusiness()">Add</button>
+  {/* Toast */}
+  {toast && (
+    <div className="fade-in" style={{
+      position: "fixed", bottom: "26px", left: "50%", transform: "translateX(-50%)",
+      background: "#111", border: `1px solid ${toast.ok?"#c9962a44":"#8f5a5a55"}`,
+      color: toast.ok?"#c9962a":"#a07070",
+      padding: "10px 22px", borderRadius: "9px", fontSize: "13px", fontWeight: 500,
+      zIndex: 9999, boxShadow: "0 8px 28px rgba(0,0,0,0.6)", whiteSpace: "nowrap"
+    }}>{toast.msg}</div>
+  )}
 </div>
 
 
-  </div>
-
-  <!-- RECEIPT -->
-
-  <div class="receipt-area">
-    <h2>Receipt</h2>
-
-
-<div class="to-field">
-  <label>To:</label>
-  <input type="text" id="toField" placeholder="Select a business or type manually" />
-</div>
-
-<div class="receipt-box">
-  <div class="receipt-header">
-    <span>Receipt / Note</span>
-    <span id="charCount">0 chars</span>
-  </div>
-  <textarea id="receiptBody" placeholder="Write the receipt details here...&#10;&#10;e.g.&#10;Date: &#10;Vehicle: &#10;Job: &#10;Amount: &#10;Notes: " oninput="updateCount()"></textarea>
-</div>
-
-<div class="actions">
-  <button class="btn copy" onclick="copyAll()">Copy All</button>
-  <button class="btn" onclick="copyEmail()">Copy Email Only</button>
-  <button class="btn secondary" onclick="printReceipt()">Print</button>
-  <button class="btn clear" onclick="clearAll()">Clear</button>
-</div>
-
-
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-  // Default businesses
-  const defaultBusinesses = [
-    { name: "Pro Motors", email: "Claims@pro-motors.co.il" }
-  ];
-
-  let businesses = [];
-
-  function loadBusinesses() {
-    const saved = localStorage.getItem('ocg_businesses');
-    if (saved) {
-      businesses = JSON.parse(saved);
-    } else {
-      businesses = [...defaultBusinesses];
-      saveBusinesses();
-    }
-    renderBusinesses();
-  }
-
-  function saveBusinesses() {
-    localStorage.setItem('ocg_businesses', JSON.stringify(businesses));
-  }
-
-  function renderBusinesses() {
-    const list = document.getElementById('bizList');
-    list.innerHTML = '';
-    businesses.forEach((biz, i) => {
-      const card = document.createElement('div');
-      card.className = 'biz-card';
-      card.innerHTML = `
-        <div class="biz-name">${biz.name}</div>
-        <div class="biz-email">${biz.email}</div>
-        <button class="delete-biz" onclick="deleteBiz(event, ${i})" title="Remove">✕</button>
-      `;
-      card.addEventListener('click', () => selectBusiness(biz, card));
-      list.appendChild(card);
-    });
-  }
-
-  function selectBusiness(biz, card) {
-    document.querySelectorAll('.biz-card').forEach(c => c.classList.remove('active'));
-    card.classList.add('active');
-    document.getElementById('toField').value = biz.email;
-  }
-
-  function addBusiness() {
-    const name = document.getElementById('newBizName').value.trim();
-    const email = document.getElementById('newBizEmail').value.trim();
-    if (!name || !email) { showToast('Fill in both fields!'); return; }
-    businesses.push({ name, email });
-    saveBusinesses();
-    renderBusinesses();
-    document.getElementById('newBizName').value = '';
-    document.getElementById('newBizEmail').value = '';
-    showToast('Business added!');
-  }
-
-  function deleteBiz(e, index) {
-    e.stopPropagation();
-    businesses.splice(index, 1);
-    saveBusinesses();
-    renderBusinesses();
-    showToast('Removed');
-  }
-
-  function updateCount() {
-    const len = document.getElementById('receiptBody').value.length;
-    document.getElementById('charCount').textContent = len + ' chars';
-  }
-
-  function copyAll() {
-    const to = document.getElementById('toField').value;
-    const body = document.getElementById('receiptBody').value;
-    const text = (to ? 'To: ' + to + '\n\n' : '') + body;
-    navigator.clipboard.writeText(text).then(() => showToast('Copied!'));
-  }
-
-  function copyEmail() {
-    const email = document.getElementById('toField').value;
-    if (!email) { showToast('No email selected'); return; }
-    navigator.clipboard.writeText(email).then(() => showToast('Email copied!'));
-  }
-
-  function clearAll() {
-    document.getElementById('toField').value = '';
-    document.getElementById('receiptBody').value = '';
-    document.querySelectorAll('.biz-card').forEach(c => c.classList.remove('active'));
-    updateCount();
-  }
-
-  function printReceipt() {
-    const to = document.getElementById('toField').value;
-    const body = document.getElementById('receiptBody').value;
-    const win = window.open('', '_blank');
-    win.document.write(<pre style="font-family:monospace;font-size:14px;padding:30px;">${to ? 'To: ' + to + '\n\n' : ''}${body}</pre>);
-
-
-win.document.close();
-win.print();
-
-
+);
 }
 
-function showToast(msg) {
-const t = document.getElementById(‘toast’);
-t.textContent = msg;
-t.classList.add(‘show’);
-setTimeout(() => t.classList.remove(‘show’), 2000);
-}
-
-loadBusinesses();
+const root = ReactDOM.createRoot(document.getElementById(“root”));
+root.render(<App />);
 </script>
 
 </body>
