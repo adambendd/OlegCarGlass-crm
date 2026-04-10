@@ -2,70 +2,320 @@
 
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OlegCarGlass — CRM</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪟</text></svg>"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { background: #0c0c0c; color: #f0ece0; font-family: 'Outfit', sans-serif; min-height: 100vh; }
-    .fade-in { animation: fadeUp 0.4s ease both; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    input, textarea, select {
-      width: 100%; padding: 11px 14px;
-      background: #161616; border: 1.5px solid #242424;
-      border-radius: 10px; color: #f0ece0; font-size: 14px;
-      font-family: 'Outfit', sans-serif; outline: none;
-      transition: border-color 0.2s;
-    }
-    input:focus, textarea:focus, select:focus { border-color: #c9962a; }
-    input::placeholder, textarea::placeholder { color: #383430; }
-    select option { background: #161616; }
-    textarea { resize: vertical; }
-    .biz-row { transition: all 0.16s ease; cursor: pointer; }
-    .biz-row:hover { background: #161410 !important; }
-    .biz-row.sel { background: #1c1810 !important; border-color: #c9962a55 !important; }
-    .primary-btn {
-      background: #c9962a; color: #0c0b09; border: none;
-      padding: 12px 24px; border-radius: 10px; font-weight: 600;
-      font-size: 14px; cursor: pointer; font-family: 'Outfit', sans-serif;
-      transition: all 0.17s; width: 100%;
-    }
-    .primary-btn:hover:not(:disabled) { background: #d9a83a; box-shadow: 0 4px 20px rgba(201,150,42,0.22); transform: translateY(-1px); }
-    .primary-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
-    .ghost-btn {
-      background: transparent; color: #666; border: 1.5px solid #222;
-      padding: 10px 18px; border-radius: 10px; font-weight: 500;
-      font-size: 13px; cursor: pointer; font-family: 'Outfit', sans-serif;
-      transition: all 0.16s;
-    }
-    .ghost-btn:hover { color: #aaa; border-color: #363636; }
-    .dashed-btn {
-      background: transparent; color: #5a5248; border: 1.5px dashed #2a2520;
-      padding: 10px; border-radius: 10px; font-size: 13px;
-      cursor: pointer; font-family: 'Outfit', sans-serif; width: 100%;
-      transition: all 0.16s; margin-top: 8px;
-    }
-    .dashed-btn:hover { color: #c9962a; border-color: #c9962a55; background: #c9962a08; }
-    .tab-btn { background: none; border: none; cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 500; padding: 8px 0; color: #444; transition: color 0.15s; position: relative; }
-    .tab-btn.on { color: #f0ece0; }
-    .tab-btn.on::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: #c9962a; border-radius: 2px; }
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-thumb { background: #222; border-radius: 4px; }
-    .del-btn { background: none; border: none; color: #333; font-size: 14px; cursor: pointer; padding: 4px 6px; border-radius: 5px; transition: color 0.15s; line-height: 1; }
-    .del-btn:hover { color: #8f5a5a; }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>OlegCarGlass — CRM</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪟</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+<style>
+:root {
+  --bg: #080808;
+  --surface: #0f0f0f;
+  --surface2: #161616;
+  --border: #1f1f1f;
+  --border2: #2a2a2a;
+  --gold: #e8b84b;
+  --gold2: #f5cc6e;
+  --gold-dim: #e8b84b18;
+  --text: #f2ede4;
+  --text2: #8a8278;
+  --text3: #3d3a35;
+  --green: #5a9e72;
+  --red: #9e5a5a;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-body); min-height: 100vh; overflow-x: hidden; }
+
+/* Ambient bg glow */
+body::before {
+content: ‘’;
+position: fixed; top: -40vh; left: -20vw;
+width: 80vw; height: 80vh;
+background: radial-gradient(ellipse, #e8b84b0a 0%, transparent 70%);
+pointer-events: none; z-index: 0;
+}
+
+/* Animations */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes shimmer { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+.fade { animation: fadeUp 0.5s cubic-bezier(.16,1,.3,1) both; }
+.fade-d1 { animation-delay: .05s; }
+.fade-d2 { animation-delay: .1s; }
+.fade-d3 { animation-delay: .15s; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-thumb { background: var(–border2); border-radius: 4px; }
+
+/* Inputs */
+input, textarea, select {
+width: 100%; padding: 12px 16px;
+background: var(–surface2); border: 1px solid var(–border);
+border-radius: 12px; color: var(–text); font-size: 14px;
+font-family: var(–font-body); outline: none;
+transition: border-color 0.2s, box-shadow 0.2s;
+-webkit-appearance: none;
+}
+input:focus, textarea:focus, select:focus {
+border-color: #e8b84b55;
+box-shadow: 0 0 0 3px #e8b84b0d;
+}
+input::placeholder, textarea::placeholder { color: var(–text3); }
+select option { background: var(–surface2); }
+textarea { resize: vertical; line-height: 1.6; }
+
+/* Buttons */
+.btn-primary {
+background: var(–gold); color: #080808;
+border: none; padding: 13px 24px; border-radius: 12px;
+font-weight: 600; font-size: 14px; cursor: pointer;
+font-family: var(–font-body); width: 100%;
+transition: all 0.2s cubic-bezier(.16,1,.3,1);
+letter-spacing: 0.2px; position: relative; overflow: hidden;
+}
+.btn-primary::after {
+content: ‘’; position: absolute; inset: 0;
+background: linear-gradient(135deg, #fff2 0%, transparent 60%);
+opacity: 0; transition: opacity 0.2s;
+}
+.btn-primary:hover:not(:disabled)::after { opacity: 1; }
+.btn-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 8px 32px #e8b84b2a; }
+.btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.btn-ghost {
+background: transparent; color: var(–text2);
+border: 1px solid var(–border); padding: 11px 18px;
+border-radius: 12px; font-size: 13px; cursor: pointer;
+font-family: var(–font-body); transition: all 0.18s;
+}
+.btn-ghost:hover { border-color: var(–border2); color: var(–text); }
+
+.btn-icon {
+background: none; border: none; color: var(–text3);
+cursor: pointer; padding: 5px; border-radius: 7px;
+font-size: 13px; transition: all 0.15s; line-height: 1;
+display: flex; align-items: center; justify-content: center;
+}
+.btn-icon:hover { color: var(–red); background: #9e5a5a12; }
+
+.btn-add {
+background: transparent; color: var(–text3);
+border: 1px dashed var(–border); padding: 10px;
+border-radius: 12px; font-size: 13px; cursor: pointer;
+font-family: var(–font-body); width: 100%; margin-top: 8px;
+transition: all 0.18s;
+}
+.btn-add:hover { color: var(–gold); border-color: #e8b84b44; background: var(–gold-dim); }
+
+/* Nav */
+.nav {
+height: 62px; border-bottom: 1px solid var(–border);
+display: flex; align-items: center; padding: 0 28px; gap: 8px;
+background: #08080899; backdrop-filter: blur(20px);
+position: sticky; top: 0; z-index: 100;
+}
+.nav-logo {
+display: flex; align-items: center; gap: 11px; margin-right: 12px; text-decoration: none;
+}
+.nav-logo-icon {
+width: 32px; height: 32px; background: var(–gold);
+border-radius: 9px; display: flex; align-items: center;
+justify-content: center; font-size: 16px; flex-shrink: 0;
+box-shadow: 0 4px 14px #e8b84b28;
+}
+.nav-logo-text { font-family: var(–font-display); font-size: 15px; font-weight: 700; letter-spacing: -0.3px; }
+.nav-logo-sub { font-size: 9px; color: var(–text3); letter-spacing: 1.5px; margin-top: 1px; }
+
+.nav-tab {
+background: none; border: none; cursor: pointer;
+font-family: var(–font-body); font-size: 13px; font-weight: 500;
+padding: 7px 14px; color: var(–text2); border-radius: 9px;
+transition: all 0.18s; position: relative;
+}
+.nav-tab:hover { color: var(–text); background: var(–surface); }
+.nav-tab.on { color: var(–text); background: var(–surface2); }
+.nav-tab.on::after {
+content: ‘’; position: absolute; bottom: -1px; left: 14px; right: 14px;
+height: 1.5px; background: var(–gold); border-radius: 2px;
+}
+
+/* Layout */
+.layout { display: flex; min-height: calc(100vh - 62px); position: relative; z-index: 1; }
+
+/* Main */
+.main { flex: 1; padding: 40px 44px 80px; min-width: 0; }
+
+/* Section header */
+.section-title {
+font-family: var(–font-display); font-size: 26px;
+font-weight: 700; letter-spacing: -0.5px; color: var(–text);
+margin-bottom: 4px;
+}
+.section-sub { font-size: 13px; color: var(–text3); margin-bottom: 32px; }
+
+/* Empty state */
+.empty {
+border: 1px dashed var(–border); border-radius: 18px;
+padding: 80px 32px; text-align: center;
+}
+.empty-icon { font-size: 36px; opacity: 0.15; margin-bottom: 14px; }
+.empty-text { font-size: 14px; color: var(–text3); }
+
+/* Form card */
+.form-card {
+background: var(–surface); border: 1px solid var(–border);
+border-radius: 18px; padding: 26px; max-width: 540px;
+}
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+.field { margin-bottom: 16px; }
+.field.full { grid-column: span 2; }
+.field-label {
+font-size: 11px; color: var(–text2); letter-spacing: 0.6px;
+margin-bottom: 7px; text-transform: uppercase; font-weight: 500;
+}
+
+/* Receipt preview */
+.preview-card {
+background: var(–surface); border: 1px solid var(–border);
+border-radius: 18px; padding: 24px; margin-top: 20px; max-width: 540px;
+}
+.preview-header {
+display: flex; justify-content: space-between; align-items: center;
+margin-bottom: 16px; padding-bottom: 14px;
+border-bottom: 1px solid var(–border);
+}
+.preview-label { font-size: 10px; color: var(–text3); letter-spacing: 1.2px; font-weight: 600; }
+.preview-actions { display: flex; gap: 8px; }
+.preview-body {
+font-family: var(–font-body); font-size: 13px; color: var(–text2);
+line-height: 1.8; white-space: pre-wrap;
+}
+
+/* Biz sidebar */
+.sidebar {
+width: 272px; border-left: 1px solid var(–border);
+background: #0a0a0a; padding: 28px 16px;
+height: calc(100vh - 62px); position: sticky; top: 62px;
+overflow-y: auto; flex-shrink: 0;
+}
+.sidebar-label {
+font-size: 10px; color: var(–text3); letter-spacing: 1.4px;
+margin-bottom: 12px; padding: 0 4px; font-weight: 600;
+}
+.biz-list { display: flex; flex-direction: column; gap: 4px; }
+.biz-item {
+padding: 11px 13px; border-radius: 12px;
+border: 1px solid transparent; cursor: pointer;
+transition: all 0.18s cubic-bezier(.16,1,.3,1);
+display: flex; align-items: center; gap: 10px;
+}
+.biz-item:hover { background: var(–surface); border-color: var(–border); }
+.biz-item.active { background: #1a1810; border-color: #e8b84b33; }
+.biz-avatar {
+width: 30px; height: 30px; border-radius: 8px;
+background: var(–surface2); display: flex; align-items: center;
+justify-content: center; font-size: 13px; flex-shrink: 0;
+transition: background 0.18s;
+}
+.biz-item.active .biz-avatar { background: #272010; }
+.biz-name {
+font-size: 13px; font-weight: 500; color: var(–text2);
+white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+transition: color 0.18s; flex: 1;
+}
+.biz-item.active .biz-name { color: var(–text); }
+.biz-email { font-size: 11px; color: var(–text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Add biz form */
+.add-biz-form {
+margin-top: 12px; background: var(–surface);
+border: 1px solid var(–border); border-radius: 14px; padding: 14px;
+}
+.add-biz-form input { margin-bottom: 8px; font-size: 13px; padding: 10px 13px; border-radius: 9px; }
+.add-biz-actions { display: flex; gap: 6px; margin-top: 4px; }
+
+/* Job items */
+.job-item {
+display: flex; align-items: center; gap: 14px;
+padding: 14px 18px; background: var(–surface);
+border: 1px solid var(–border); border-radius: 14px;
+margin-bottom: 7px; max-width: 540px;
+transition: border-color 0.18s;
+}
+.job-item:hover { border-color: var(–border2); }
+.job-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.job-info { flex: 1; min-width: 0; }
+.job-name { font-size: 14px; font-weight: 500; }
+.job-meta { font-size: 11px; color: var(–text3); margin-top: 2px; }
+.job-badge {
+font-size: 10px; padding: 3px 9px; border-radius: 20px;
+font-weight: 500; letter-spacing: 0.3px;
+}
+.job-amount { font-family: var(–font-display); font-size: 15px; font-weight: 700; }
+
+/* Stat cards */
+.stat-grid { display: flex; gap: 12px; margin-bottom: 32px; max-width: 540px; }
+.stat-card {
+flex: 1; background: var(–surface); border: 1px solid var(–border);
+border-radius: 16px; padding: 18px 20px;
+}
+.stat-label { font-size: 10px; color: var(–text3); letter-spacing: 1px; margin-bottom: 10px; font-weight: 600; }
+.stat-value { font-family: var(–font-display); font-size: 22px; font-weight: 700; }
+
+/* Spinner */
+.spinner {
+width: 14px; height: 14px; border: 2px solid #08080840;
+border-top-color: #080808; border-radius: 50%;
+animation: spin 0.7s linear infinite; display: inline-block;
+vertical-align: middle; margin-right: 8px;
+}
+
+/* Toast */
+.toast {
+position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+padding: 11px 22px; border-radius: 12px; font-size: 13px; font-weight: 500;
+z-index: 9999; white-space: nowrap; backdrop-filter: blur(20px);
+animation: fadeUp 0.3s cubic-bezier(.16,1,.3,1) both;
+box-shadow: 0 8px 40px #00000060;
+}
+
+/* Selected biz bar */
+.biz-bar {
+display: flex; align-items: center; gap: 12px;
+padding: 12px 16px; background: var(–surface);
+border: 1px solid var(–border); border-radius: 14px;
+margin-bottom: 24px; max-width: 540px;
+}
+.biz-bar-avatar {
+width: 34px; height: 34px; background: #1e1c14;
+border-radius: 9px; display: flex; align-items: center;
+justify-content: center; font-size: 15px;
+}
+.biz-bar-name { font-size: 14px; font-weight: 600; }
+.biz-bar-email { font-size: 12px; color: var(–text3); }
+.biz-bar-change {
+margin-left: auto; font-size: 12px; color: var(–gold);
+background: none; border: none; cursor: pointer;
+font-family: var(–font-body); padding: 5px 10px;
+border-radius: 7px; transition: background 0.15s;
+}
+.biz-bar-change:hover { background: var(–gold-dim); }
+</style>
+
 </head>
 <body>
 <div id="root"></div>
 <script type="text/babel">
-const { useState, useCallback } = React;
+const { useState, useRef } = React;
 
-const DEFAULT_BUSINESSES = [
+const INIT_BIZ = [
 { id: 1, name: “SafeLite AutoGlass”, email: “orders@safelite.com”, phone: “800-638-8958” },
 { id: 2, name: “Harmon AutoGlass”, email: “contact@harmonag.com”, phone: “800-726-8464” },
 { id: 3, name: “Novus Glass”, email: “info@novusglass.com”, phone: “800-944-7732” },
@@ -73,181 +323,179 @@ const DEFAULT_BUSINESSES = [
 { id: 5, name: “National Windshield”, email: “orders@nationalws.com”, phone: “888-200-4100” },
 ];
 
-const Lbl = ({ c }) => (
+const fmt = v => $${Math.abs(Number(v)).toFixed(2)};
+const today = new Date().toLocaleDateString(“en-US”, { weekday:“long”, month:“long”, day:“numeric” });
 
-  <div style={{ fontSize: "11px", color: "#5a5248", letterSpacing: "0.7px", marginBottom: "6px", textTransform: "uppercase" }}>{c}</div>
+function Field({ label, children, full }) {
+return (
+<div className={field${full?" full":""}}>
+<div className="field-label">{label}</div>
+{children}
+</div>
 );
+}
 
 function App() {
-const [businesses, setBusinesses] = useState(DEFAULT_BUSINESSES);
+const [biz, setBiz] = useState(INIT_BIZ);
 const [sel, setSel] = useState(null);
 const [tab, setTab] = useState(“receipt”);
-const [addingBiz, setAddingBiz] = useState(false);
-const [newBiz, setNewBiz] = useState({ name: “”, email: “”, phone: “” });
-
-const [form, setForm] = useState({ service: “”, amount: “”, date: “”, notes: “”, msg: “” });
+const [addOpen, setAddOpen] = useState(false);
+const [newB, setNewB] = useState({ name:””, email:””, phone:”” });
+const [form, setForm] = useState({ service:””, amount:””, date:””, notes:””, msg:”” });
 const [loading, setLoading] = useState(false);
 const [preview, setPreview] = useState(null);
+const [jobs, setJobs] = useState([]);
+const [jf, setJf] = useState({ service:””, amount:””, date:””, type:“income”, status:“paid”, bizId:”” });
 const [toast, setToast] = useState(null);
 
-const [jobs, setJobs] = useState([]);
-const [jf, setJf] = useState({ service: “”, amount: “”, date: “”, type: “income”, status: “paid”, bizId: “” });
+const ping = (msg, ok=true) => {
+setToast({msg,ok});
+setTimeout(()=>setToast(null), 3000);
+};
 
-const ping = (msg, ok = true) => {
-setToast({ msg, ok });
-setTimeout(() => setToast(null), 3200);
+const pickBiz = (b) => {
+setSel(b); setPreview(null); setTab(“receipt”);
 };
 
 const generate = async () => {
 if (!sel) return ping(“Select a business first”, false);
-if (!form.service.trim() || !form.amount) return ping(“Service and amount are required”, false);
-setLoading(true);
-setPreview(null);
+if (!form.service.trim() || !form.amount) return ping(“Service and amount required”, false);
+setLoading(true); setPreview(null);
 try {
-const res = await fetch(“https://api.anthropic.com/v1/messages”, {
-method: “POST”,
-headers: { “Content-Type”: “application/json” },
+const r = await fetch(“https://api.anthropic.com/v1/messages”, {
+method:“POST”,
+headers:{“Content-Type”:“application/json”},
 body: JSON.stringify({
-model: “claude-sonnet-4-20250514”,
-max_tokens: 900,
-messages: [{
-role: “user”,
-content: Write a short, warm and professional email receipt from OlegCarGlass auto glass shop.\nTo: ${sel.name} (${sel.email})\nService: ${form.service}\nAmount: $${form.amount}\nDate: ${form.date || "today"}\nNotes: ${form.notes || "none"}\nPersonal message: ${form.msg || "none"}\n\nFirst line must be exactly: Subject: [your subject here]\nThen blank line, then the email body.\nFriendly, concise, professional. Sign off as Oleg — OlegCarGlass.
-}]
+model:“claude-sonnet-4-20250514”, max_tokens:900,
+messages:[{role:“user”, content:Write a professional, warm, concise email receipt from OlegCarGlass auto glass repair shop.\nTo: ${sel.name} (${sel.email})\nService: ${form.service}\nAmount: $${form.amount}\nDate: ${form.date||"today"}\nNotes: ${form.notes||"none"}\nMessage from Oleg: ${form.msg||"none"}\n\nFormat: First line must be "Subject: [subject]", blank line, then email body.\nTone: friendly, professional. Sign as: Oleg — OlegCarGlass}]
 })
 });
-const data = await res.json();
-if (data.error) { ping(“API error: “ + data.error.message, false); setLoading(false); return; }
-const text = (data.content || []).map(b => b.text || “”).join(”\n”);
-setPreview(text);
-} catch (e) {
-ping(“Something went wrong. Check your connection.”, false);
-}
-setLoading(false);
+const d = await r.json();
+if (d.error) return ping(“Error: “+d.error.message, false);
+setPreview((d.content||[]).map(b=>b.text||””).join(”\n”));
+} catch { ping(“Connection error. Try again.”, false); }
+finally { setLoading(false); }
 };
 
 const openMail = () => {
-if (!preview || !sel) return;
+if (!preview||!sel) return;
 const lines = preview.split(”\n”);
-const subLine = lines.find(l => /^subject:/i.test(l.trim())) || “”;
-const subject = subLine.replace(/^subject:\s*/i, “”).trim();
-const body = lines.filter(l => !/^subject:/i.test(l.trim())).join(”\n”).trim();
-window.open(mailto:${sel.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)});
-ping(Email client opened for ${sel.name} ✓);
+const sub = (lines.find(l=>/^subject:/i.test(l.trim()))||””).replace(/^subject:\s*/i,””).trim();
+const body = lines.filter(l=>!/^subject:/i.test(l.trim())).join(”\n”).trim();
+window.open(mailto:${sel.email}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)});
+ping(Opened email for ${sel.name} ✓);
 };
 
 const saveBiz = () => {
-if (!newBiz.name.trim()) return ping(“Business name is required”, false);
-setBusinesses(p => […p, { …newBiz, id: Date.now() }]);
-setNewBiz({ name: “”, email: “”, phone: “” });
-setAddingBiz(false);
-ping(${newBiz.name} added);
+if (!newB.name.trim()) return ping(“Name required”, false);
+setBiz(p=>[…p,{…newB,id:Date.now()}]);
+setNewB({name:””,email:””,phone:””});
+setAddOpen(false);
+ping(${newB.name} added);
 };
 
-const deleteBiz = (id) => {
-if (sel?.id === id) setSel(null);
-setBusinesses(p => p.filter(b => b.id !== id));
-ping(“Business removed”);
+const deleteBiz = (id,e) => {
+e.stopPropagation();
+if (sel?.id===id) setSel(null);
+setBiz(p=>p.filter(b=>b.id!==id));
 };
 
 const saveJob = () => {
-if (!jf.service.trim() || !jf.amount) return ping(“Service and amount are required”, false);
-setJobs(p => […p, { …jf, id: Date.now(), amount: parseFloat(jf.amount) }]);
-setJf({ service: “”, amount: “”, date: “”, type: “income”, status: “paid”, bizId: “” });
+if (!jf.service.trim()||!jf.amount) return ping(“Fill service and amount”, false);
+setJobs(p=>[…p,{…jf,id:Date.now(),amount:parseFloat(jf.amount)}]);
+setJf({service:””,amount:””,date:””,type:“income”,status:“paid”,bizId:””});
 ping(“Job saved”);
 };
 
-const deleteJob = (id) => { setJobs(p => p.filter(j => j.id !== id)); };
-
-const inc = jobs.filter(j => j.type === “income”).reduce((s, j) => s + j.amount, 0);
-const exp = jobs.filter(j => j.type === “expense”).reduce((s, j) => s + j.amount, 0);
-
-const today = new Date().toLocaleDateString(“en-US”, { month: “long”, day: “numeric”, year: “numeric” });
+const inc = jobs.filter(j=>j.type===“income”).reduce((s,j)=>s+j.amount,0);
+const exp = jobs.filter(j=>j.type===“expense”).reduce((s,j)=>s+j.amount,0);
 
 return (
-<div style={{ minHeight: “100vh”, background: “#0c0c0c”, color: “#f0ece0”, fontFamily: “‘Outfit’, sans-serif” }}>
+<div>
+{/* NAV */}
+<nav className="nav">
+<div className="nav-logo">
+<div className="nav-logo-icon">🪟</div>
+<div>
+<div className="nav-logo-text">OlegCarGlass</div>
+<div className="nav-logo-sub">AUTO GLASS CRM</div>
+</div>
+</div>
+<div style={{display:“flex”,gap:“4px”,marginLeft:“8px”}}>
+{[[“receipt”,“Receipts”],[“jobs”,“Jobs”],[“finances”,“Finances”]].map(([k,l])=>(
+<button key={k} className={nav-tab${tab===k?" on":""}} onClick={()=>setTab(k)}>{l}</button>
+))}
+</div>
+<div style={{marginLeft:“auto”,fontSize:“12px”,color:“var(–text3)”,fontWeight:300}}>{today}</div>
+</nav>
 
 
-  {/* Nav */}
-  <nav style={{
-    height: "60px", borderBottom: "1px solid #181818",
-    display: "flex", alignItems: "center", padding: "0 28px", gap: "24px",
-    background: "#0c0c0c", position: "sticky", top: 0, zIndex: 50
-  }}>
-    <div style={{ display: "flex", alignItems: "center", gap: "10px", marginRight: "4px" }}>
-      <div style={{ width: "30px", height: "30px", background: "#c9962a", borderRadius: "7px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "15px" }}>🪟</div>
-      <div>
-        <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", lineHeight: 1.1 }}>OlegCarGlass</div>
-        <div style={{ fontSize: "9px", color: "#33302a", letterSpacing: "1.2px" }}>AUTO GLASS</div>
-      </div>
-    </div>
-    {[["receipt","Receipts"],["jobs","Jobs"],["finances","Finances"]].map(([k,l]) => (
-      <button key={k} className={`tab-btn ${tab===k?"on":""}`} onClick={() => setTab(k)}>{l}</button>
-    ))}
-    <div style={{ marginLeft: "auto", fontSize: "12px", color: "#2e2b26" }}>{today}</div>
-  </nav>
-
-  {/* Body */}
-  <div style={{ display: "flex", minHeight: "calc(100vh - 60px)" }}>
+  {/* LAYOUT */}
+  <div className="layout">
 
     {/* MAIN */}
-    <div style={{ flex: 1, padding: "36px 40px 80px", minWidth: 0 }}>
+    <div className="main">
 
-      {/* RECEIPTS */}
-      {tab === "receipt" && (
-        <div className="fade-in">
-          <div style={{ marginBottom: "28px" }}>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "24px", fontWeight: 500 }}>
-              {sel ? `Receipt for ${sel.name}` : "Send a Receipt"}
-            </h1>
-            <p style={{ color: "#3d3830", fontSize: "13px", marginTop: "5px" }}>
-              {sel ? sel.email : "Click a business on the right to begin"}
-            </p>
+      {/* ── RECEIPTS ── */}
+      {tab==="receipt" && (
+        <div className="fade">
+          <div className="section-title">Send a Receipt</div>
+          <div className="section-sub">
+            {sel ? `Ready to send to ${sel.name}` : "Select a business from the right panel to begin"}
           </div>
 
           {!sel ? (
-            <div style={{ border: "1.5px dashed #1e1e1e", borderRadius: "14px", padding: "72px 32px", textAlign: "center" }}>
-              <div style={{ fontSize: "30px", marginBottom: "10px", opacity: 0.25 }}>👉</div>
-              <div style={{ fontSize: "14px", color: "#2a2824" }}>Select a business from the sidebar to get started</div>
+            <div className="empty">
+              <div className="empty-icon">✉️</div>
+              <div className="empty-text">No business selected — pick one from the sidebar →</div>
             </div>
           ) : (
-            <div style={{ maxWidth: "520px" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-                <div style={{ marginBottom: "16px" }}>
-                  <Lbl c="Service / Work Done" />
-                  <input value={form.service} onChange={e => setForm(p => ({...p, service: e.target.value}))} placeholder="e.g. Windshield replacement" />
+            <div>
+              {/* Selected biz bar */}
+              <div className="biz-bar fade">
+                <div className="biz-bar-avatar">🏢</div>
+                <div>
+                  <div className="biz-bar-name">{sel.name}</div>
+                  <div className="biz-bar-email">{sel.email}</div>
                 </div>
-                <div style={{ marginBottom: "16px" }}>
-                  <Lbl c="Amount ($)" />
-                  <input type="number" value={form.amount} onChange={e => setForm(p => ({...p, amount: e.target.value}))} placeholder="0.00" />
+                <button className="biz-bar-change" onClick={()=>setSel(null)}>Change</button>
+              </div>
+
+              <div className="form-card fade fade-d1">
+                <div className="form-grid">
+                  <Field label="Service / Work Done" full>
+                    <input value={form.service} onChange={e=>setForm(p=>({...p,service:e.target.value}))} placeholder="e.g. Windshield replacement" />
+                  </Field>
+                  <Field label="Amount ($)">
+                    <input type="number" value={form.amount} onChange={e=>setForm(p=>({...p,amount:e.target.value}))} placeholder="0.00" />
+                  </Field>
+                  <Field label="Date">
+                    <input type="date" value={form.date} onChange={e=>setForm(p=>({...p,date:e.target.value}))} />
+                  </Field>
+                  <Field label="Job Notes" full>
+                    <textarea rows={2} value={form.notes} onChange={e=>setForm(p=>({...p,notes:e.target.value}))} placeholder="Part numbers, vehicle info, anything relevant…" />
+                  </Field>
+                  <Field label="Personal Message (optional)" full>
+                    <textarea rows={2} value={form.msg} onChange={e=>setForm(p=>({...p,msg:e.target.value}))} placeholder="e.g. Thanks for the ongoing work, really appreciate it!" />
+                  </Field>
                 </div>
+                <button className="btn-primary" onClick={generate} disabled={loading}>
+                  {loading ? <><span className="spinner"/>Generating receipt…</> : "✦  Generate Receipt with AI"}
+                </button>
               </div>
-              <div style={{ marginBottom: "16px" }}>
-                <Lbl c="Date" />
-                <input type="date" value={form.date} onChange={e => setForm(p => ({...p, date: e.target.value}))} />
-              </div>
-              <div style={{ marginBottom: "16px" }}>
-                <Lbl c="Job Notes (optional)" />
-                <textarea rows={2} value={form.notes} onChange={e => setForm(p => ({...p, notes: e.target.value}))} placeholder="Part numbers, vehicle info, anything relevant…" />
-              </div>
-              <div style={{ marginBottom: "22px" }}>
-                <Lbl c="Personal Message (optional)" />
-                <textarea rows={2} value={form.msg} onChange={e => setForm(p => ({...p, msg: e.target.value}))} placeholder="e.g. Thanks for the referral, really appreciate it!" />
-              </div>
-              <button className="primary-btn" onClick={generate} disabled={loading}>
-                {loading ? "Writing your receipt…" : "✦  Generate Receipt with AI"}
-              </button>
 
               {preview && (
-                <div className="fade-in" style={{ marginTop: "22px", background: "#111", border: "1px solid #1e1e1e", borderRadius: "14px", padding: "20px 22px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
-                    <span style={{ fontSize: "11px", color: "#4a4540", letterSpacing: "0.6px" }}>PREVIEW</span>
-                    <div style={{ display: "flex", gap: "8px" }}>
-                      <button className="ghost-btn" style={{ padding: "7px 14px", fontSize: "12px" }} onClick={() => setPreview(null)}>Discard</button>
-                      <button className="primary-btn" style={{ width: "auto", padding: "8px 20px", fontSize: "13px" }} onClick={openMail}>Open in Mail →</button>
+                <div className="preview-card fade">
+                  <div className="preview-header">
+                    <span className="preview-label">EMAIL PREVIEW</span>
+                    <div className="preview-actions">
+                      <button className="btn-ghost" style={{padding:"7px 14px",fontSize:"12px"}} onClick={()=>setPreview(null)}>Discard</button>
+                      <button className="btn-primary" style={{width:"auto",padding:"9px 20px",fontSize:"13px"}} onClick={openMail}>
+                        Open in Mail →
+                      </button>
                     </div>
                   </div>
-                  <pre style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", color: "#9a9080", lineHeight: 1.75, whiteSpace: "pre-wrap" }}>{preview}</pre>
+                  <div className="preview-body">{preview}</div>
                 </div>
               )}
             </div>
@@ -255,156 +503,139 @@ return (
         </div>
       )}
 
-      {/* JOBS */}
-      {tab === "jobs" && (
-        <div className="fade-in">
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "24px", fontWeight: 500, marginBottom: "26px" }}>Jobs</h1>
-          <div style={{ maxWidth: "520px", background: "#111", border: "1px solid #1a1a1a", borderRadius: "14px", padding: "22px", marginBottom: "20px" }}>
-            <div style={{ fontSize: "12px", color: "#3d3830", marginBottom: "16px" }}>Log a new job or expense</div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-              <div style={{ marginBottom: "14px", gridColumn: "span 2" }}>
-                <Lbl c="Service" />
-                <input value={jf.service} onChange={e => setJf(p => ({...p, service: e.target.value}))} placeholder="e.g. Windshield repair" />
-              </div>
-              <div style={{ marginBottom: "14px" }}>
-                <Lbl c="Amount ($)" />
-                <input type="number" value={jf.amount} onChange={e => setJf(p => ({...p, amount: e.target.value}))} placeholder="0.00" />
-              </div>
-              <div style={{ marginBottom: "14px" }}>
-                <Lbl c="Date" />
-                <input type="date" value={jf.date} onChange={e => setJf(p => ({...p, date: e.target.value}))} />
-              </div>
-              <div style={{ marginBottom: "14px" }}>
-                <Lbl c="Type" />
-                <select value={jf.type} onChange={e => setJf(p => ({...p, type: e.target.value}))}>
+      {/* ── JOBS ── */}
+      {tab==="jobs" && (
+        <div className="fade">
+          <div className="section-title">Jobs</div>
+          <div className="section-sub">Log income and expenses</div>
+
+          <div className="form-card" style={{marginBottom:"24px"}}>
+            <div style={{fontSize:"12px",color:"var(--text3)",marginBottom:"16px",fontWeight:500,letterSpacing:"0.3px"}}>NEW ENTRY</div>
+            <div className="form-grid">
+              <Field label="Service / Description" full>
+                <input value={jf.service} onChange={e=>setJf(p=>({...p,service:e.target.value}))} placeholder="e.g. Windshield repair" />
+              </Field>
+              <Field label="Amount ($)">
+                <input type="number" value={jf.amount} onChange={e=>setJf(p=>({...p,amount:e.target.value}))} placeholder="0.00" />
+              </Field>
+              <Field label="Date">
+                <input type="date" value={jf.date} onChange={e=>setJf(p=>({...p,date:e.target.value}))} />
+              </Field>
+              <Field label="Type">
+                <select value={jf.type} onChange={e=>setJf(p=>({...p,type:e.target.value}))}>
                   <option value="income">Income</option>
                   <option value="expense">Expense</option>
                 </select>
-              </div>
-              <div style={{ marginBottom: "14px" }}>
-                <Lbl c="Status" />
-                <select value={jf.status} onChange={e => setJf(p => ({...p, status: e.target.value}))}>
+              </Field>
+              <Field label="Status">
+                <select value={jf.status} onChange={e=>setJf(p=>({...p,status:e.target.value}))}>
                   <option value="paid">Paid</option>
                   <option value="pending">Pending</option>
                 </select>
-              </div>
-              <div style={{ marginBottom: "18px", gridColumn: "span 2" }}>
-                <Lbl c="Business" />
-                <select value={jf.bizId} onChange={e => setJf(p => ({...p, bizId: e.target.value}))}>
+              </Field>
+              <Field label="Business" full>
+                <select value={jf.bizId} onChange={e=>setJf(p=>({...p,bizId:e.target.value}))}>
                   <option value="">— none —</option>
-                  {businesses.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
+                  {biz.map(b=><option key={b.id} value={b.id}>{b.name}</option>)}
                 </select>
-              </div>
+              </Field>
             </div>
-            <button className="primary-btn" onClick={saveJob}>Save Job</button>
+            <button className="btn-primary" onClick={saveJob}>Save Entry</button>
           </div>
 
-          {jobs.length === 0
-            ? <div style={{ color: "#2a2824", fontSize: "14px", paddingTop: "16px" }}>No jobs logged yet.</div>
-            : <div style={{ maxWidth: "520px", display: "flex", flexDirection: "column", gap: "7px" }}>
-                {jobs.slice().reverse().map(j => {
-                  const b = businesses.find(x => x.id === parseInt(j.bizId));
-                  return (
-                    <div key={j.id} style={{ display: "flex", alignItems: "center", gap: "12px", padding: "13px 16px", background: "#0f0f0f", borderLeft: `3px solid ${j.type==="income"?"#6a8f5a":"#8f5a5a"}`, borderRadius: "9px" }}>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: "13px", fontWeight: 500 }}>{j.service}</div>
-                        <div style={{ fontSize: "11px", color: "#3d3830", marginTop: "2px" }}>{b?.name || "—"}{j.date && ` · ${j.date}`}</div>
-                      </div>
-                      <span style={{ fontSize: "10px", padding: "3px 9px", borderRadius: "20px", background: j.status==="paid"?"#6a8f5a18":"#c9962a18", color: j.status==="paid"?"#6a8f5a":"#c9962a" }}>{j.status}</span>
-                      <div style={{ fontFamily:"'Playfair Display',serif", fontSize: "15px", color: j.type==="income"?"#6a8f5a":"#8f5a5a" }}>{j.type==="expense"?"−":"+"}${j.amount.toFixed(2)}</div>
-                      <button className="del-btn" onClick={() => deleteJob(j.id)} title="Delete">✕</button>
+          {jobs.length===0
+            ? <div className="empty"><div className="empty-icon">📋</div><div className="empty-text">No jobs logged yet. Add your first entry above.</div></div>
+            : jobs.slice().reverse().map(j=>{
+                const b = biz.find(x=>x.id===parseInt(j.bizId));
+                const isInc = j.type==="income";
+                return (
+                  <div key={j.id} className="job-item">
+                    <div className="job-dot" style={{background:isInc?"var(--green)":"var(--red)"}}/>
+                    <div className="job-info">
+                      <div className="job-name">{j.service}</div>
+                      <div className="job-meta">{b?.name||"—"}{j.date&&` · ${j.date}`}</div>
                     </div>
-                  );
-                })}
-              </div>
+                    <span className="job-badge" style={{background:j.status==="paid"?"#5a9e7218":"#e8b84b18",color:j.status==="paid"?"var(--green)":"var(--gold)"}}>{j.status}</span>
+                    <div className="job-amount" style={{color:isInc?"var(--green)":"var(--red)"}}>{isInc?"+":"−"}{fmt(j.amount)}</div>
+                    <button className="btn-icon" onClick={()=>setJobs(p=>p.filter(x=>x.id!==j.id))}>✕</button>
+                  </div>
+                );
+              })
           }
         </div>
       )}
 
-      {/* FINANCES */}
-      {tab === "finances" && (
-        <div className="fade-in">
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "24px", fontWeight: 500, marginBottom: "26px" }}>Finances</h1>
-          {jobs.length === 0
-            ? <div style={{ color: "#2a2824", fontSize: "14px", textAlign: "center", paddingTop: "60px" }}>
-                <div style={{ fontSize: "34px", marginBottom: "12px", opacity: 0.2 }}>📊</div>
-                Log jobs first — your financial summary will appear here.
-              </div>
-            : <div style={{ maxWidth: "520px" }}>
-                <div style={{ display: "flex", gap: "12px", marginBottom: "28px" }}>
-                  {[["Income", inc, "#6a8f5a"],["Expenses", exp, "#8f5a5a"],["Profit", inc-exp, inc-exp>=0?"#c9962a":"#8f5a5a"]].map(([l,v,c]) => (
-                    <div key={l} style={{ flex: 1, background: "#111", border: "1px solid #1a1a1a", borderRadius: "12px", padding: "16px 18px" }}>
-                      <div style={{ fontSize: "10px", color: "#3d3830", letterSpacing: "0.8px", marginBottom: "8px" }}>{l.toUpperCase()}</div>
-                      <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "20px", color: c }}>${Math.abs(v).toFixed(2)}</div>
+      {/* ── FINANCES ── */}
+      {tab==="finances" && (
+        <div className="fade">
+          <div className="section-title">Finances</div>
+          <div className="section-sub">Your income and expense overview</div>
+
+          {jobs.length===0
+            ? <div className="empty"><div className="empty-icon">📊</div><div className="empty-text">Log jobs first — your financial summary appears here.</div></div>
+            : <>
+                <div className="stat-grid">
+                  {[["INCOME",inc,"var(--green)"],["EXPENSES",exp,"var(--red)"],["NET PROFIT",inc-exp,inc-exp>=0?"var(--gold)":"var(--red)"]].map(([l,v,c])=>(
+                    <div key={l} className="stat-card">
+                      <div className="stat-label">{l}</div>
+                      <div className="stat-value" style={{color:c}}>{fmt(v)}</div>
                     </div>
                   ))}
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                  {jobs.slice().reverse().map(j => (
-                    <div key={j.id} style={{ display: "flex", alignItems: "center", gap: "12px", padding: "11px 14px", background: "#0f0f0f", borderRadius: "8px" }}>
-                      <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: j.type==="income"?"#6a8f5a":"#8f5a5a", flexShrink: 0 }} />
-                      <div style={{ flex: 1, fontSize: "13px" }}>{j.service}</div>
-                      <div style={{ fontSize: "12px", color: "#3d3830" }}>{j.date}</div>
-                      <div style={{ fontSize: "13px", fontWeight: 600, color: j.type==="income"?"#6a8f5a":"#8f5a5a" }}>{j.type==="expense"?"−":"+"}${j.amount.toFixed(2)}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+                {jobs.slice().reverse().map(j=>(
+                  <div key={j.id} style={{display:"flex",alignItems:"center",gap:"12px",padding:"12px 16px",background:"var(--surface)",border:"1px solid var(--border)",borderRadius:"12px",marginBottom:"6px",maxWidth:"540px"}}>
+                    <div style={{width:"5px",height:"5px",borderRadius:"50%",background:j.type==="income"?"var(--green)":"var(--red)",flexShrink:0}}/>
+                    <div style={{flex:1,fontSize:"13px",fontWeight:500}}>{j.service}</div>
+                    <div style={{fontSize:"11px",color:"var(--text3)"}}>{j.date}</div>
+                    <div style={{fontSize:"13px",fontWeight:700,fontFamily:"var(--font-display)",color:j.type==="income"?"var(--green)":"var(--red)"}}>{j.type==="income"?"+":"−"}{fmt(j.amount)}</div>
+                  </div>
+                ))}
+              </>
           }
         </div>
       )}
     </div>
 
     {/* SIDEBAR */}
-    <div style={{
-      width: "268px", borderLeft: "1px solid #161616",
-      background: "#090909", padding: "28px 16px",
-      height: "calc(100vh - 60px)", position: "sticky",
-      top: "60px", overflowY: "auto", flexShrink: 0
-    }}>
-      <div style={{ fontSize: "10px", color: "#2e2b26", letterSpacing: "1.2px", marginBottom: "14px", paddingLeft: "2px" }}>YOUR BUSINESSES</div>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-        {businesses.map(b => (
-          <div key={b.id} className={`biz-row ${sel?.id===b.id?"sel":""}`}
-            onClick={() => { setSel(b); setPreview(null); setTab("receipt"); }}
-            style={{ padding: "11px 13px", borderRadius: "10px", border: `1.5px solid ${sel?.id===b.id?"#c9962a44":"#141414"}`, position: "relative" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-              <div style={{ width: "28px", height: "28px", borderRadius: "6px", background: sel?.id===b.id?"#1e1c14":"#141414", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", flexShrink: 0 }}>🏢</div>
-              <div style={{ overflow: "hidden", flex: 1 }}>
-                <div style={{ fontSize: "13px", fontWeight: 500, color: sel?.id===b.id?"#f0ece0":"#8a8070", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{b.name}</div>
-                <div style={{ fontSize: "11px", color: "#2e2c28", marginTop: "1px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{b.email}</div>
-              </div>
-              <button className="del-btn" onClick={e => { e.stopPropagation(); deleteBiz(b.id); }} title="Remove" style={{ flexShrink: 0 }}>✕</button>
+    <div className="sidebar">
+      <div className="sidebar-label">YOUR BUSINESSES</div>
+      <div className="biz-list">
+        {biz.map((b,i)=>(
+          <div key={b.id} className={`biz-item${sel?.id===b.id?" active":""}`}
+            onClick={()=>pickBiz(b)}
+            style={{animationDelay:`${i*0.04}s`}}>
+            <div className="biz-avatar">🏢</div>
+            <div style={{overflow:"hidden",flex:1}}>
+              <div className="biz-name">{b.name}</div>
+              <div className="biz-email">{b.email||"—"}</div>
             </div>
+            <button className="btn-icon" onClick={e=>deleteBiz(b.id,e)} style={{flexShrink:0}}>✕</button>
           </div>
         ))}
       </div>
 
-      {addingBiz ? (
-        <div style={{ marginTop: "14px", background: "#111", border: "1px solid #1e1e1e", borderRadius: "12px", padding: "14px" }}>
-          <input value={newBiz.name} onChange={e => setNewBiz(p => ({...p, name: e.target.value}))} placeholder="Business name" style={{ marginBottom: "8px" }} />
-          <input value={newBiz.email} onChange={e => setNewBiz(p => ({...p, email: e.target.value}))} placeholder="Email" style={{ marginBottom: "8px" }} />
-          <input value={newBiz.phone} onChange={e => setNewBiz(p => ({...p, phone: e.target.value}))} placeholder="Phone (optional)" style={{ marginBottom: "12px" }} />
-          <div style={{ display: "flex", gap: "7px" }}>
-            <button className="primary-btn" style={{ padding: "9px" }} onClick={saveBiz}>Save</button>
-            <button className="ghost-btn" style={{ flex: 1 }} onClick={() => setAddingBiz(false)}>Cancel</button>
+      {addOpen ? (
+        <div className="add-biz-form">
+          <input value={newB.name} onChange={e=>setNewB(p=>({...p,name:e.target.value}))} placeholder="Business name *" />
+          <input value={newB.email} onChange={e=>setNewB(p=>({...p,email:e.target.value}))} placeholder="Email address" />
+          <input value={newB.phone} onChange={e=>setNewB(p=>({...p,phone:e.target.value}))} placeholder="Phone (optional)" style={{marginBottom:0}} />
+          <div className="add-biz-actions">
+            <button className="btn-primary" style={{padding:"9px",fontSize:"13px"}} onClick={saveBiz}>Save</button>
+            <button className="btn-ghost" style={{flex:1,fontSize:"12px",padding:"8px"}} onClick={()=>setAddOpen(false)}>Cancel</button>
           </div>
         </div>
       ) : (
-        <button className="dashed-btn" onClick={() => setAddingBiz(true)}>+ Add business</button>
+        <button className="btn-add" onClick={()=>setAddOpen(true)}>+ Add business</button>
       )}
     </div>
   </div>
 
-  {/* Toast */}
+  {/* TOAST */}
   {toast && (
-    <div className="fade-in" style={{
-      position: "fixed", bottom: "26px", left: "50%", transform: "translateX(-50%)",
-      background: "#111", border: `1px solid ${toast.ok?"#c9962a44":"#8f5a5a55"}`,
-      color: toast.ok?"#c9962a":"#a07070",
-      padding: "10px 22px", borderRadius: "9px", fontSize: "13px", fontWeight: 500,
-      zIndex: 9999, boxShadow: "0 8px 28px rgba(0,0,0,0.6)", whiteSpace: "nowrap"
+    <div className="toast" style={{
+      background: toast.ok ? "#1a1810" : "#1a1010",
+      border: `1px solid ${toast.ok?"#e8b84b33":"#9e5a5a33"}`,
+      color: toast.ok ? "var(--gold)" : "#c07070"
     }}>{toast.msg}</div>
   )}
 </div>
@@ -413,8 +644,7 @@ return (
 );
 }
 
-const root = ReactDOM.createRoot(document.getElementById(“root”));
-root.render(<App />);
+ReactDOM.createRoot(document.getElementById(“root”)).render(<App/>);
 </script>
 
 </body>
